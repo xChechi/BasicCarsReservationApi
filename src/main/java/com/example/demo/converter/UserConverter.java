@@ -1,6 +1,7 @@
 package com.example.demo.converter;
 
 import com.example.demo.dto.UserRequest;
+import com.example.demo.dto.UserResponse;
 import com.example.demo.entity.User;
 import org.springframework.stereotype.Component;
 
@@ -17,5 +18,16 @@ public class UserConverter {
                 .reservations(request.getReservations())
                 .build();
 
+    }
+
+    public UserResponse toUserResponse (User user) {
+
+        return new UserResponse(user.getId(), user.getFirstname(), user.getLastname(), user.getEmail(), user.getReservations());
+
+    }
+
+    public UserResponse toError(String error) {
+
+        return new UserResponse(error);
     }
 }
