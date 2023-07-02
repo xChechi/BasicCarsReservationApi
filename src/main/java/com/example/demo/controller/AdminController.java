@@ -3,11 +3,14 @@ package com.example.demo.controller;
 import com.example.demo.dto.car.CarRequest;
 import com.example.demo.dto.car.CarResponse;
 import com.example.demo.dto.car.CarUpdateRequest;
+import com.example.demo.dto.reservation.ReservationResponse;
 import com.example.demo.dto.user.UserResponse;
 import com.example.demo.entity.Car;
+import com.example.demo.entity.Reservation;
 import com.example.demo.entity.User;
 import com.example.demo.exception.DuplicateCarException;
 import com.example.demo.service.CarService;
+import com.example.demo.service.ReservationService;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,8 @@ public class AdminController {
     UserService userService;
     @Autowired
     CarService carService;
+    @Autowired
+    ReservationService reservationService;
 
     //========================================== USER =================================================
 
@@ -80,4 +85,25 @@ public class AdminController {
     }
 
     //======================================= RESERVATIONS =====================================================
+
+    @GetMapping("/reservations")
+    public ResponseEntity<List<ReservationResponse>> findAllReservations () {
+        List<ReservationResponse> response = reservationService.getAllReservations();
+        return ResponseEntity.status(HttpStatus.FOUND).body(response);
+    }
+
+
+
+   // @GetMapping("/reservations")
+   // public List<ReservationResponse> getAllReservations() {
+   //     return reservationService.getAllReservations();
+    //}
+
+    @GetMapping("/reservations/{id}")
+    public ResponseEntity<ReservationResponse> findReservationById (@PathVariable Integer id) {
+
+        ReservationResponse reservationResponse = reservationService.findReservationById(id);
+        return ResponseEntity.status(HttpStatus.FOUND).body(reservationResponse);
+    }
+
 }

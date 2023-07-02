@@ -15,13 +15,12 @@ public class CarConverter {
                 .model(request.getModel())
                 .seats(request.getSeats())
                 .dailyCharge(request.getDailyCharge())
-                .reservations(request.getReservations())
                 .build();
     }
 
     public CarResponse toCarResponse (Car car) {
 
-        return new CarResponse(car.getId(), car.getMake(), car.getModel(), car.getSeats(), car.getDailyCharge(), car.getReservations());
+        return new CarResponse(car.getId(), car.getMake(), car.getModel(), car.getSeats(), car.getDailyCharge());
     }
 
 }

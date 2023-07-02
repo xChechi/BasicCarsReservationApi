@@ -1,10 +1,15 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.car.CarResponse;
+import com.example.demo.dto.reservation.ReservationRequest;
+import com.example.demo.dto.reservation.ReservationResponse;
 import com.example.demo.dto.user.UserPasswordUpdateRequest;
 import com.example.demo.dto.user.UserRequest;
 import com.example.demo.dto.user.UserResponse;
 import com.example.demo.dto.user.UserUpdateRequest;
+import com.example.demo.entity.Reservation;
 import com.example.demo.service.CarService;
+import com.example.demo.service.ReservationService;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +28,8 @@ public class UserController {
     UserService userService;
     @Autowired
     CarService carService;
+    @Autowired
+    ReservationService reservationService;
 
     //============================================ USER =====================================================
 
@@ -72,5 +79,28 @@ public class UserController {
         return carService.findAllCars();
     }
 
+    @GetMapping("/{id}/{carId}")
+    public ResponseEntity<CarResponse> findCarById (@PathVariable Integer carId) {
+        CarResponse carResponse = carService.findCarById(carId);
+        return ResponseEntity.status(HttpStatus.FOUND).body(carResponse);
+    }
+
     //============================================== RESERVATIONS =====================================================
+
+    @PostMapping("/{userId}/{carId}/book")
+    public ResponseEntity<String> bookReservation (@PathVariable Integer userId,@PathVariable Integer carId, @Valid @RequestBody ReservationRequest request) {
+
+        ReservationResponse reservationResponse = reservationService.bookReservation(userId, carId, request);
+
+        String response = String.format("Your reservation has been created");
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/{userId}/{carId}/{reservationId}")
+    public ResponseEntity<ReservationResponse> findReservationById (@PathVariable Integer reservationId) {
+
+        return ResponseEntity.status(HttpStatus.FOUND).body(reservationService.findReservationById(reservationId));
+    }
+
+
 }

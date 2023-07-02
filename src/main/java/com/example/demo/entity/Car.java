@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,7 +9,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@EqualsAndHashCode
 @Builder
 @Entity
 @Table(name = "cars", uniqueConstraints = {
@@ -29,5 +29,6 @@ public class Car {
     private double dailyCharge;
 
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
     private List<Reservation> reservations;
 }

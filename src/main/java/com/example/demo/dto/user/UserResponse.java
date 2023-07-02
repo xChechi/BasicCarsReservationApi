@@ -1,12 +1,10 @@
 package com.example.demo.dto.user;
 
-import com.example.demo.entity.Reservation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,8 +24,6 @@ public class UserResponse {
     @Email
     private String email;
 
-    private List<Reservation> reservations;
-
     @JsonIgnore
     private String error;
     
@@ -35,17 +31,11 @@ public class UserResponse {
         this.error = error;
     }
 
-    public UserResponse(Integer id, String firstname, String lastname, String email, List<Reservation> reservations) {
+    public UserResponse(Integer id, String firstname, String lastname, String email) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
-        this.reservations = reservations;
-    }
-/*
-    public UserResponse(String firstname, String lastname, String email, List<Reservation> reservations) {
-
     }
 
- */
 }

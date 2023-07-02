@@ -15,14 +15,13 @@ public class UserConverter {
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(request.getPassword())
-                .reservations(request.getReservations())
                 .build();
 
     }
 
     public UserResponse toUserResponse (User user) {
 
-        return new UserResponse(user.getId(), user.getFirstname(), user.getLastname(), user.getEmail(), user.getReservations());
+        return new UserResponse(user.getId(), user.getFirstname(), user.getLastname(), user.getEmail());
 
     }
 
