@@ -24,6 +24,8 @@ public class UserController {
     @Autowired
     CarService carService;
 
+    //============================================ USER =====================================================
+
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> findUserById (@PathVariable Integer id) {
 
@@ -69,4 +71,6 @@ public class UserController {
     public List<Car> findAllCars () {
         return carService.findAllCars();
     }
+
+    //============================================== RESERVATIONS =====================================================
 }

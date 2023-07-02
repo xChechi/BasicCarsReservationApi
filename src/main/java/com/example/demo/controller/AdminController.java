@@ -26,6 +26,8 @@ public class AdminController {
     @Autowired
     CarService carService;
 
+    //========================================== USER =================================================
+
     @GetMapping("/users")
     public List<User> findAllUsers () {
         return userService.findAllUsers();
@@ -37,7 +39,7 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.FOUND).body(userResponse);
     }
 
-    //============================= CARS ==============================
+    //========================================== CARS =================================================
 
     @GetMapping("/cars")
     public List<Car> findAllCars () {
@@ -77,4 +79,5 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.OK).body(carResponse);
     }
 
+    //======================================= RESERVATIONS =====================================================
 }
