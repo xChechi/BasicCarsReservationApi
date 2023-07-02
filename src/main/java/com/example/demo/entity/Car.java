@@ -11,7 +11,9 @@ import java.util.List;
 @EqualsAndHashCode
 @Builder
 @Entity
-@Table(name = "cars")
+@Table(name = "cars", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"make", "model", "seats"})
+})
 public class Car {
 
     @Id
@@ -24,7 +26,7 @@ public class Car {
 
     private int seats;
 
-    private double dailyPrice;
+    private double dailyCharge;
 
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Reservation> reservations;

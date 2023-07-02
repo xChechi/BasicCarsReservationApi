@@ -1,15 +1,19 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.UserPasswordUpdateRequest;
-import com.example.demo.dto.UserRequest;
-import com.example.demo.dto.UserResponse;
-import com.example.demo.dto.UserUpdateRequest;
+import com.example.demo.dto.user.UserPasswordUpdateRequest;
+import com.example.demo.dto.user.UserRequest;
+import com.example.demo.dto.user.UserResponse;
+import com.example.demo.dto.user.UserUpdateRequest;
+import com.example.demo.service.CarService;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.demo.entity.Car;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -17,6 +21,8 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    CarService carService;
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> findUserById (@PathVariable Integer id) {
@@ -55,5 +61,12 @@ public class UserController {
 
         UserResponse userResponse = userService.updateUserPassword(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(userResponse);
+    }
+
+    //================================================ CARS ===========================================================
+
+    @GetMapping("/{id}/cars")
+    public List<Car> findAllCars () {
+        return carService.findAllCars();
     }
 }

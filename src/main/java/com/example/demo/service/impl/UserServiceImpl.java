@@ -1,11 +1,12 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.converter.UserConverter;
-import com.example.demo.dto.UserPasswordUpdateRequest;
-import com.example.demo.dto.UserRequest;
-import com.example.demo.dto.UserResponse;
-import com.example.demo.dto.UserUpdateRequest;
+import com.example.demo.dto.user.UserPasswordUpdateRequest;
+import com.example.demo.dto.user.UserRequest;
+import com.example.demo.dto.user.UserResponse;
+import com.example.demo.dto.user.UserUpdateRequest;
 import com.example.demo.entity.User;
+import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +33,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse findUserById(Integer id) {
-        User user = userRepository.findById(id).orElseThrow(() -> {throw new RuntimeException("User not found"); });
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
         return userConverter.toUserResponse(user);
     }
 
     @Override
     public UserResponse findUserByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> { throw new RuntimeException("User not found");});
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found"));
         return userConverter.toUserResponse(user);
     }
 
@@ -67,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse updateUser(Integer id, UserUpdateRequest request) {
-        User user = userRepository.findById(id).orElseThrow( () -> { throw new RuntimeException("User not exist"); } );
+        User user = userRepository.findById(id).orElseThrow( () -> new UserNotFoundException("User not exist"));
 
         user.setFirstname(request.getFirstname());
         user.setLastname(request.getLastname());
@@ -79,7 +80,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse updateUserPassword(Integer id, UserPasswordUpdateRequest request) {
-        User user = userRepository.findById(id).orElseThrow( () -> { throw new RuntimeException("User not exist"); } );
+        User user = userRepository.findById(id).orElseThrow( () -> new UserNotFoundException("User not exist"));
 
         user.setPassword(request.getPassword());
 

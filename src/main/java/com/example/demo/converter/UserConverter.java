@@ -1,7 +1,7 @@
 package com.example.demo.converter;
 
-import com.example.demo.dto.UserRequest;
-import com.example.demo.dto.UserResponse;
+import com.example.demo.dto.user.UserRequest;
+import com.example.demo.dto.user.UserResponse;
 import com.example.demo.entity.User;
 import org.springframework.stereotype.Component;
 

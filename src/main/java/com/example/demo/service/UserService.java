@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
 
-import com.example.demo.dto.UserPasswordUpdateRequest;
-import com.example.demo.dto.UserRequest;
-import com.example.demo.dto.UserResponse;
-import com.example.demo.dto.UserUpdateRequest;
+import com.example.demo.dto.user.UserPasswordUpdateRequest;
+import com.example.demo.dto.user.UserRequest;
+import com.example.demo.dto.user.UserResponse;
+import com.example.demo.dto.user.UserUpdateRequest;
 import com.example.demo.entity.User;
 
 import java.util.List;
