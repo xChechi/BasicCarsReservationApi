@@ -87,16 +87,16 @@ public class UserController {
 
     //============================================== RESERVATIONS =====================================================
 
-    @PostMapping("/{userId}/{carId}/book")
-    public ResponseEntity<String> bookReservation (@PathVariable Integer userId,@PathVariable Integer carId, @Valid @RequestBody ReservationRequest request) {
+    @PostMapping("/{userId}/book")
+    public ResponseEntity<String> bookReservation (@PathVariable Integer userId, @Valid @RequestBody ReservationRequest request) {
 
-        ReservationResponse reservationResponse = reservationService.bookReservation(userId, carId, request);
+        ReservationResponse reservationResponse = reservationService.bookReservation(userId, request);
 
         String response = String.format("Your reservation has been created");
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping("/{userId}/{carId}/{reservationId}")
+    @GetMapping("/{userId}/reservations/{reservationId}")
     public ResponseEntity<ReservationResponse> findReservationById (@PathVariable Integer reservationId) {
 
         return ResponseEntity.status(HttpStatus.FOUND).body(reservationService.findReservationById(reservationId));

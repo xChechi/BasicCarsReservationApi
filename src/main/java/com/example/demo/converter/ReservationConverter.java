@@ -26,10 +26,10 @@ public class ReservationConverter {
     @Autowired
     UserConverter userConverter;
 
-    public Reservation bookReservation (Integer userId, Integer carId, ReservationRequest request) {
+    public Reservation bookReservation (Integer userId, ReservationRequest request) {
 
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("Invalid userId"));
-        Car car = carRepository.findById(carId).orElseThrow(() -> new CarNotFoundException("Invalid carId"));
+        Car car = carRepository.findById(request.getCarId()).orElseThrow(() -> new CarNotFoundException("Invalid carId"));
 
         return Reservation.builder()
                 .user(user)

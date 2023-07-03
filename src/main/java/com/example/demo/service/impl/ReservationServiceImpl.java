@@ -56,8 +56,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public ReservationResponse bookReservation(Integer userId, Integer carId, ReservationRequest request) {
-        Reservation reservation = reservationConverter.bookReservation(userId, carId, request);
+    public ReservationResponse bookReservation(Integer userId, ReservationRequest request) {
+        Reservation reservation = reservationConverter.bookReservation(userId, request);
         Reservation savedReservation = reservationRepository.save(reservation);
         return reservationConverter.toReservationResponse(savedReservation);
     }

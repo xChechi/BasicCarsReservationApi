@@ -13,6 +13,9 @@ import java.time.LocalDate;
 public class ReservationRequest {
 
     @NotNull
+    private Integer carId;
+
+    @NotNull
     private LocalDate startDate;
 
     @NotNull

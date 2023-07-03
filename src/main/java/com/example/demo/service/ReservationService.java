@@ -16,7 +16,7 @@ public interface ReservationService {
 
     ReservationResponse findReservationById (Integer id);
 
-    ReservationResponse bookReservation (Integer userId, Integer carId, ReservationRequest request);
+    ReservationResponse bookReservation (Integer userId, ReservationRequest request);
 
     ReservationResponse updateCarReservation (Integer id, ReservationCarUpdateRequest request);
 
