@@ -14,10 +14,12 @@ import com.example.demo.service.ReservationService;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -92,13 +94,6 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.FOUND).body(response);
     }
 
-
-
-   // @GetMapping("/reservations")
-   // public List<ReservationResponse> getAllReservations() {
-   //     return reservationService.getAllReservations();
-    //}
-
     @GetMapping("/reservations/{id}")
     public ResponseEntity<ReservationResponse> findReservationById (@PathVariable Integer id) {
 
@@ -106,4 +101,41 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.FOUND).body(reservationResponse);
     }
 
+    @GetMapping(value = "/reservations", params = "userId")
+    public ResponseEntity<List<ReservationResponse>> searchByUser (@RequestParam("userId") Integer userId) {
+
+        List<ReservationResponse> reservationResponse = reservationService.searchByUser(userId);
+
+        if (reservationResponse.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.FOUND).body(reservationResponse);
+        }
+    }
+
+    @GetMapping(value = "/reservations", params = "carId")
+    public ResponseEntity<List<ReservationResponse>> searchByCar (@RequestParam("carId") Integer carId) {
+
+        List<ReservationResponse> reservationResponses = reservationService.searchByCar(carId);
+
+        if(reservationResponses.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.FOUND).body(reservationResponses);
+        }
+    }
+
+    @GetMapping("/reservations/period")
+    public ResponseEntity<List<Reservation>> findReservationsWithinPeriod (
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+
+        List<Reservation> reservations = reservationService.findReservationsWithinPeriod(startDate, endDate);
+
+        if(reservations.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.FOUND).body(reservations);
+        }
+    }
 }

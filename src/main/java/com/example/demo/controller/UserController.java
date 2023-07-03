@@ -9,7 +9,6 @@ import com.example.demo.dto.user.UserPasswordUpdateRequest;
 import com.example.demo.dto.user.UserRequest;
 import com.example.demo.dto.user.UserResponse;
 import com.example.demo.dto.user.UserUpdateRequest;
-import com.example.demo.entity.Reservation;
 import com.example.demo.service.CarService;
 import com.example.demo.service.ReservationService;
 import com.example.demo.service.UserService;

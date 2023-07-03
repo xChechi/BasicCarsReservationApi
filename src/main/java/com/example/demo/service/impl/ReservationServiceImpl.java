@@ -15,8 +15,10 @@ import com.example.demo.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -30,12 +32,6 @@ public class ReservationServiceImpl implements ReservationService {
         this.reservationRepository = reservationRepository;
         this.reservationConverter = reservationConverter;
         this.carRepository = carRepository;
-    }
-
-    @Override
-    public List<Reservation> findAllReservations() {
-
-        return reservationRepository.findAll();
     }
 
     @Override
@@ -92,4 +88,43 @@ public class ReservationServiceImpl implements ReservationService {
     public void deleteReservationById(Integer id) {
         reservationRepository.deleteById(id);
     }
+
+    @Override
+    public List<ReservationResponse> searchByUser(Integer userId) {
+
+        List<Reservation> reservations = reservationRepository.findAll();
+
+        List<ReservationResponse> reservationResponses = reservations.stream()
+                .filter(reservation -> {
+                    Integer reservationUserId = reservation.getUser().getId();
+                    return reservationUserId != null && reservationUserId.equals(userId);
+                })
+                .map(reservation -> reservationConverter.toReservationResponse(reservation))
+                .collect(Collectors.toList());
+
+        return reservationResponses;
+    }
+
+    @Override
+    public List<ReservationResponse> searchByCar(Integer carId) {
+
+        List<Reservation> reservations = reservationRepository.findAll();
+
+        List<ReservationResponse> reservationResponses = reservations.stream()
+                .filter(reservation -> {
+                    Integer reservationCarId = reservation.getCar().getId();
+                    return reservationCarId !=null && reservationCarId.equals(carId);
+                })
+                .map(reservation -> reservationConverter.toReservationResponse(reservation))
+                .collect(Collectors.toList());
+
+        return reservationResponses;
+    }
+
+    @Override
+    public List<Reservation> findReservationsWithinPeriod(LocalDate startDate, LocalDate endDate) {
+
+        return reservationRepository.findReservationsWithinPeriod(startDate, endDate);
+    }
+
 }

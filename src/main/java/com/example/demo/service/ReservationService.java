@@ -6,11 +6,10 @@ import com.example.demo.dto.reservation.ReservationRequest;
 import com.example.demo.dto.reservation.ReservationResponse;
 import com.example.demo.entity.Reservation;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ReservationService {
-
-    List<Reservation> findAllReservations ();
 
     List<ReservationResponse> getAllReservations();
 
@@ -23,4 +22,10 @@ public interface ReservationService {
     ReservationResponse updatePeriodReservation (Integer id, ReservationPeriodUpdateRequest request);
 
     void deleteReservationById (Integer id);
+
+    List<ReservationResponse> searchByUser (Integer userId);
+
+    List<ReservationResponse> searchByCar (Integer carId);
+
+    List<Reservation> findReservationsWithinPeriod(LocalDate startDate, LocalDate endDate);
 }
