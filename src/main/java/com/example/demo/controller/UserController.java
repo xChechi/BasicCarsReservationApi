@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.car.CarResponse;
+import com.example.demo.dto.reservation.ReservationCarUpdateRequest;
+import com.example.demo.dto.reservation.ReservationPeriodUpdateRequest;
 import com.example.demo.dto.reservation.ReservationRequest;
 import com.example.demo.dto.reservation.ReservationResponse;
 import com.example.demo.dto.user.UserPasswordUpdateRequest;
@@ -102,5 +104,23 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.FOUND).body(reservationService.findReservationById(reservationId));
     }
 
+    @DeleteMapping("/{userId}/reservations/{reservationId}/delete-reservation")
+    public ResponseEntity<String> deleteReservationById (@PathVariable Integer reservationId) {
+        reservationService.deleteReservationById(reservationId);
+        return ResponseEntity.status(HttpStatus.OK).body("Reservation has been deleted");
+    }
 
+    @PutMapping("/{userId}/reservations/{reservationId}/update-car")
+    public ResponseEntity<ReservationResponse> updateCar (@PathVariable Integer reservationId, @Valid @RequestBody ReservationCarUpdateRequest request) {
+
+        ReservationResponse reservationResponse = reservationService.updateCarReservation(reservationId, request);
+        return ResponseEntity.status(HttpStatus.OK).body(reservationResponse);
+    }
+
+    @PutMapping("/{userId}/reservations/{reservationId}/update-period")
+    public ResponseEntity<ReservationResponse> updatePeriod (@PathVariable Integer reservationId, @Valid @RequestBody ReservationPeriodUpdateRequest request) {
+
+        ReservationResponse reservationResponse = reservationService.updatePeriodReservation(reservationId, request);
+        return ResponseEntity.status(HttpStatus.OK).body(reservationResponse);
+    }
 }

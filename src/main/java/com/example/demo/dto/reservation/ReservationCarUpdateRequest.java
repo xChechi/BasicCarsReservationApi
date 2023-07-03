@@ -12,6 +12,6 @@ import lombok.*;
 public class ReservationCarUpdateRequest {
 
     @NotNull
-    private Car car;
+    private Integer carId;
 
 }

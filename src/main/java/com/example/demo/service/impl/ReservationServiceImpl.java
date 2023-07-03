@@ -5,12 +5,12 @@ import com.example.demo.dto.reservation.ReservationCarUpdateRequest;
 import com.example.demo.dto.reservation.ReservationPeriodUpdateRequest;
 import com.example.demo.dto.reservation.ReservationRequest;
 import com.example.demo.dto.reservation.ReservationResponse;
+import com.example.demo.entity.Car;
 import com.example.demo.entity.Reservation;
-import com.example.demo.entity.User;
+import com.example.demo.exception.CarNotFoundException;
 import com.example.demo.exception.ReservationNotFoundException;
-import com.example.demo.exception.UserNotFoundException;
+import com.example.demo.repository.CarRepository;
 import com.example.demo.repository.ReservationRepository;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,11 +23,13 @@ public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final ReservationConverter reservationConverter;
+    private final CarRepository carRepository;
 
     @Autowired
-    public ReservationServiceImpl(ReservationRepository reservationRepository, ReservationConverter reservationConverter) {
+    public ReservationServiceImpl(ReservationRepository reservationRepository, ReservationConverter reservationConverter, CarRepository carRepository) {
         this.reservationRepository = reservationRepository;
         this.reservationConverter = reservationConverter;
+        this.carRepository = carRepository;
     }
 
     @Override
@@ -66,7 +68,9 @@ public class ReservationServiceImpl implements ReservationService {
     public ReservationResponse updateCarReservation(Integer id, ReservationCarUpdateRequest request) {
         Reservation reservation = reservationRepository.findById(id).orElseThrow( () -> new ReservationNotFoundException("Reservation not exist"));
 
-        reservation.setCar(request.getCar());
+        Car car = carRepository.findById(request.getCarId()).orElseThrow( () -> new CarNotFoundException("Car not exist"));
+
+        reservation.setCar(car);
 
         Reservation savedReservation = reservationRepository.save(reservation);
 
